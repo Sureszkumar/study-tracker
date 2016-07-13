@@ -2,7 +2,7 @@ package com.sample.controller;
 
 import com.sample.domain.User;
 import com.sample.service.UserService;
-import com.sample.service.exception.UserAlreadyExistsException;
+import com.sample.service.exception.UserServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -35,9 +35,14 @@ public class UserController {
         return userService.getList();
     }
 
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+    public User getUser(@PathVariable("id") final String id) {
+        LOGGER.debug("Received request to retrieve user : {}", id);
+        return userService.getUser(id);
+    }
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)
-    public String handleUserAlreadyExistsException(UserAlreadyExistsException e) {
+    public String handleUserServiceException(UserServiceException e) {
         return e.getMessage();
     }
 

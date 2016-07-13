@@ -2,7 +2,7 @@ package com.sample.service;
 
 import com.sample.domain.User;
 import com.sample.repository.UserRepository;
-import com.sample.service.exception.UserAlreadyExistsException;
+import com.sample.service.exception.UserServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -32,10 +32,22 @@ public class UserServiceImpl implements UserService {
         LOGGER.debug("Creating {}", user);
         User existing = repository.findOne(user.getId());
         if (existing != null) {
-            throw new UserAlreadyExistsException(
+            throw new UserServiceException(
                     String.format("There already exists a user with id=%s", user.getId()));
         }
         return repository.save(user);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public User getUser(String userId) {
+        LOGGER.debug("Retrieving the user : {}", userId);
+        User user = repository.findOne(userId);
+        if (user == null) {
+            throw new UserServiceException(
+                    String.format("User with id=%s is not exist", userId));
+        }
+        return repository.findOne(userId);
     }
 
     @Override
@@ -44,5 +56,6 @@ public class UserServiceImpl implements UserService {
         LOGGER.debug("Retrieving the list of all users");
         return repository.findAll();
     }
+
 
 }

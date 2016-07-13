@@ -3,7 +3,7 @@ package com.sample.service;
 import com.sample.domain.User;
 import com.sample.repository.UserRepository;
 import com.sample.util.UserUtil;
-import com.sample.service.exception.UserAlreadyExistsException;
+import com.sample.service.exception.UserServiceException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,7 +51,7 @@ public class UserServiceImplTest {
         try {
             userService.save(UserUtil.createUser());
             fail("Expected exception");
-        } catch (UserAlreadyExistsException ignored) {
+        } catch (UserServiceException ignored) {
         }
         verify(userRepository, never()).save(any(User.class));
     }
