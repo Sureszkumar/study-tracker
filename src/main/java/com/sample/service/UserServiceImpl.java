@@ -1,6 +1,6 @@
 package com.sample.service;
 
-import com.sample.domain.User;
+import com.sample.domain.UserProfile;
 import com.sample.repository.UserRepository;
 import com.sample.service.exception.UserServiceException;
 import org.slf4j.Logger;
@@ -28,31 +28,55 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User save(@NotNull @Valid final User user) {
-        LOGGER.debug("Creating {}", user);
-        User existing = repository.findOne(user.getId());
+    public UserProfile save(@NotNull @Valid final UserProfile userProfile) {
+        LOGGER.debug("Creating {}", userProfile);
+        UserProfile existing = repository.getUserByEmail(userProfile.getEmail());
         if (existing != null) {
             throw new UserServiceException(
-                    String.format("There already exists a user with id=%s", user.getId()));
+                    String.format("There already exists a user with email =%s", userProfile.getEmail()));
         }
-        return repository.save(user);
+
+        return repository.save(userProfile);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long userId) {
+        LOGGER.debug("Deleting {}", userId);
+        UserProfile existing = repository.findOne(userId);
+        if (existing == null) {
+            throw new UserServiceException(
+                    String.format("user with id =%s not exist", userId));
+        }
+        repository.delete(userId);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public User getUser(String userId) {
+    public UserProfile getUser(Long userId) {
         LOGGER.debug("Retrieving the user : {}", userId);
-        User user = repository.findOne(userId);
-        if (user == null) {
+        UserProfile userProfile = repository.findOne(userId);
+        if (userProfile == null) {
             throw new UserServiceException(
                     String.format("User with id=%s is not exist", userId));
         }
-        return repository.findOne(userId);
+        return userProfile;
+    }
+    @Override
+    @Transactional(readOnly = true)
+    public UserProfile getUserByEmail(String email) {
+        LOGGER.debug("Retrieving the user by email : {}", email);
+        UserProfile userProfile = repository.getUserByEmail(email);
+        if (userProfile == null) {
+            throw new UserServiceException(
+                    String.format("User with id=%s is not exist", email));
+        }
+        return userProfile;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<User> getList() {
+    public List<UserProfile> getList() {
         LOGGER.debug("Retrieving the list of all users");
         return repository.findAll();
     }

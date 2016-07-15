@@ -1,7 +1,7 @@
 package com.sample.controller;
 
 import com.sample.util.UserUtil;
-import com.sample.domain.User;
+import com.sample.domain.UserProfile;
 import com.sample.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +16,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserControllerTest {
+public class UserProfileControllerTest {
 
     @Mock
     private UserService userService;
@@ -30,27 +30,27 @@ public class UserControllerTest {
 
     @Test
     public void shouldCreateUser() throws Exception {
-        final User savedUser = stubServiceToReturnStoredUser();
-        final User user = UserUtil.createUser();
-        User returnedUser = userController.createUser(user);
+        final UserProfile savedUserProfile = stubServiceToReturnStoredUser();
+        final UserProfile userProfile = UserUtil.createUser();
+        UserProfile returnedUserProfile = userController.createUser(userProfile);
         // verify user was passed to UserService
-        verify(userService, times(1)).save(user);
-        assertEquals("Returned user should come from the service", savedUser, returnedUser);
+        verify(userService, times(1)).save(userProfile);
+        assertEquals("Returned user should come from the service", savedUserProfile, returnedUserProfile);
     }
 
-    private User stubServiceToReturnStoredUser() {
-        final User user = UserUtil.createUser();
-        when(userService.save(any(User.class))).thenReturn(user);
-        return user;
+    private UserProfile stubServiceToReturnStoredUser() {
+        final UserProfile userProfile = UserUtil.createUser();
+        when(userService.save(any(UserProfile.class))).thenReturn(userProfile);
+        return userProfile;
     }
 
 
     @Test
     public void shouldListAllUsers() throws Exception {
         stubServiceToReturnExistingUsers(10);
-        Collection<User> users = userController.listUsers();
-        assertNotNull(users);
-        assertEquals(10, users.size());
+        Collection<UserProfile> userProfiles = userController.listUsers();
+        assertNotNull(userProfiles);
+        assertEquals(10, userProfiles.size());
         // verify user was passed to UserService
         verify(userService, times(1)).getList();
     }

@@ -1,6 +1,6 @@
 package com.sample.util;
 
-import com.sample.domain.User;
+import com.sample.domain.UserProfile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,16 +13,16 @@ public class UserUtil {
     private UserUtil() {
     }
 
-    public static User createUser() {
-        return new User(ID, PASSWORD);
+    public static UserProfile createUser() {
+        return new UserProfile(ID, PASSWORD);
     }
 
-    public static List<User> createUserList(int howMany) {
-        List<User> userList = new ArrayList<>();
+    public static List<UserProfile> createUserList(int howMany) {
+        List<UserProfile> userProfileList = new ArrayList<>();
         for (int i = 0; i < howMany; i++) {
-            userList.add(new User(ID + "#" + i, PASSWORD));
+            userProfileList.add(new UserProfile(ID + "#" + i, PASSWORD));
         }
-        return userList;
+        return userProfileList;
     }
 
 }

@@ -1,15 +1,18 @@
 package com.sample.service;
 
-import com.sample.domain.User;
+import com.sample.domain.UserProfile;
 
 import java.util.List;
 
 public interface UserService {
 
-    User save(User user);
+    UserProfile save(UserProfile userProfile);
 
-    List<User> getList();
+    List<UserProfile> getList();
 
-    User getUser(String userId);
+    UserProfile getUser(Long userId);
 
+    UserProfile getUserByEmail(String email);
+
+    void delete(Long userId);
 }
