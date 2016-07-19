@@ -1,9 +1,9 @@
 package com.sample.repository;
 
-import com.sample.domain.UserProfile;
+import com.sample.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<UserProfile, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    UserProfile getUserByEmail(String email);
+    User getUserByMobile(String email);
 }

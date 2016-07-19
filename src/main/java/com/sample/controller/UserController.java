@@ -1,6 +1,6 @@
 package com.sample.controller;
 
-import com.sample.domain.UserProfile;
+import com.sample.domain.User;
 import com.sample.service.UserService;
 import com.sample.service.exception.UserServiceException;
 import org.slf4j.Logger;
@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -23,21 +24,21 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public List<UserProfile> listUsers() {
+    public List<User> listUsers() {
         LOGGER.debug("Received request to list all users");
         return userService.getList();
     }
 
     @RequestMapping(value = "/user/{email}", method = RequestMethod.GET)
-    public UserProfile getUserByEmail(@PathVariable("email") final String email) {
+    public User getUserByEmail(@PathVariable("email") final String email) {
         LOGGER.debug("Received request to retrieve user : {}", email);
         return userService.getUserByEmail(email);
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
-    public UserProfile createUser(@RequestBody final UserProfile userProfile) {
-        LOGGER.debug("Received request to create the {}", userProfile);
-        return userService.save(userProfile);
+    public User createUser(@RequestBody final User user) {
+        LOGGER.debug("Received request to create the {}", user);
+        return userService.createUser(user);
     }
 
 
