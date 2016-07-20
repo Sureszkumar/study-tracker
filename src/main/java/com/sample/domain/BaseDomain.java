@@ -2,22 +2,18 @@ package com.sample.domain;
 
 
 import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-public abstract class BaseDomain {
+@MappedSuperclass
+public class BaseDomain {
 
-    @Column(name = "CREATION_DATE_TIME", nullable = false)
-    @NotNull
+    @Column(name = "CREATION_DATE_TIME")
     private LocalDateTime creationDateTime;
 
-    @Column(name = "LAST_CHANGE_TIMESTAMP", nullable = false)
-    @NotNull
+    @Column(name = "LAST_CHANGE_TIMESTAMP")
     private LocalDateTime lastChangeTimestamp;
-
-    public abstract Long getId();
-
-    protected abstract void setId(Long id);
 
     public LocalDateTime getCreationDateTime() {
         return creationDateTime;

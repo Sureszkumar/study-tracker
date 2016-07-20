@@ -11,11 +11,11 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
-public class User {
+public class User extends BaseDomain {
 
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
@@ -31,12 +31,6 @@ public class User {
 
     @NotNull
     private Boolean otpVerified = false;
-
-    @Column(name = "CREATION_DATE_TIME")
-    private LocalDateTime creationDateTime;
-
-    @Column(name = "LAST_CHANGE_TIMESTAMP")
-    private LocalDateTime lastChangeTimestamp;
 
     public Long getId() {
         return id;
@@ -95,21 +89,6 @@ public class User {
         this.mobile = mobile;
     }
 
-    public LocalDateTime getCreationDateTime() {
-        return creationDateTime;
-    }
-
-    public void setCreationDateTime(LocalDateTime creationDateTime) {
-        this.creationDateTime = creationDateTime;
-    }
-
-    public LocalDateTime getLastChangeTimestamp() {
-        return lastChangeTimestamp;
-    }
-
-    public void setLastChangeTimestamp(LocalDateTime lastChangeTimestamp) {
-        this.lastChangeTimestamp = lastChangeTimestamp;
-    }
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
