@@ -32,12 +32,10 @@ public class User {
     @NotNull
     private Boolean otpVerified = false;
 
-    @Column(name = "CREATION_DATE_TIME", nullable = false)
-    @NotNull
+    @Column(name = "CREATION_DATE_TIME")
     private LocalDateTime creationDateTime;
 
-    @Column(name = "LAST_CHANGE_TIMESTAMP", nullable = false)
-    @NotNull
+    @Column(name = "LAST_CHANGE_TIMESTAMP")
     private LocalDateTime lastChangeTimestamp;
 
     public Long getId() {

@@ -47,6 +47,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
+    public User updateUser(@NotNull final User user) {
+        LOGGER.debug("Updating {}", user);
+        user.setLastChangeTimestamp(LocalDateTime.now());
+        return repository.save(user);
+    }
+
+    @Override
+    @Transactional
     public void delete(Long userId) {
         LOGGER.debug("Deleting {}", userId);
         User existing = repository.findOne(userId);
@@ -65,17 +73,6 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UserServiceException(
                     String.format("User with id=%s is not exist", userId));
-        }
-        return user;
-    }
-    @Override
-    @Transactional(readOnly = true)
-    public User getUserByEmail(String mobile) {
-        LOGGER.debug("Retrieving the user by mobile : {}", mobile);
-        User user = repository.getUserByMobile(mobile);
-        if (user == null) {
-            throw new UserServiceException(
-                    String.format("User with id=%s is not exist", mobile));
         }
         return user;
     }

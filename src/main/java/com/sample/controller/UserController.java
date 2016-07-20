@@ -29,10 +29,10 @@ public class UserController {
         return userService.getList();
     }
 
-    @RequestMapping(value = "/user/{email}", method = RequestMethod.GET)
-    public User getUserByEmail(@PathVariable("email") final String email) {
-        LOGGER.debug("Received request to retrieve user : {}", email);
-        return userService.getUserByEmail(email);
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+    public User getUserByEmail(@PathVariable("id") final Long id) {
+        LOGGER.debug("Received request to retrieve user : {}", id);
+        return userService.getUser(id);
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
@@ -41,6 +41,11 @@ public class UserController {
         return userService.createUser(user);
     }
 
+    @RequestMapping(value = "/user", method = RequestMethod.PUT)
+    public User updateUser(@RequestBody final User user) {
+        LOGGER.debug("Received request to create the {}", user);
+        return userService.updateUser(user);
+    }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
     public void deleteUser(@PathVariable("id") final Long userId) {
