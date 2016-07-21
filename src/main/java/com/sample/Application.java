@@ -33,7 +33,7 @@ public class Application extends SpringBootServletInitializer {
     @Bean
     public Docket newsApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("greetings")
+                .groupName("StudyTracker")
                 .apiInfo(apiInfo())
                 .select()
                 .paths(PathSelectors.any())
@@ -44,7 +44,7 @@ public class Application extends SpringBootServletInitializer {
         return new ApiInfoBuilder()
                 .title("Study Tracker REST services desc with Swagger")
                 .description("Study Tracker REST services  with Swagger")
-                .termsOfServiceUrl("http://www-03.ibm.com/software/sla/sladb.nsf/sla/bm?Open")
+                .termsOfServiceUrl("http://www-03.study-tracker.com/software/sla/sladb.nsf/sla/bm?Open")
                 .contact("Suresh Kumar")
                 .license("Apache License Version 2.0")
                 .licenseUrl("LICENSE")
