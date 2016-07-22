@@ -2,17 +2,25 @@ package com.sample.controller;
 
 import com.sample.domain.Book;
 import com.sample.domain.Course;
+import com.sample.domain.Image;
 import com.sample.domain.User;
 import com.sample.service.BookService;
 import com.sample.service.CourseService;
+import com.sample.service.ImageService;
 import com.sample.service.UserService;
 import com.sample.service.exception.ServiceException;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
+import javax.servlet.annotation.MultipartConfig;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -22,14 +30,17 @@ public class StudyTrackController {
     private final UserService userService;
     private final BookService bookService;
     private final CourseService courseService;
+    private final ImageService imageService;
 
     @Inject
-    public StudyTrackController(final UserService userService, BookService bookService, CourseService courseService) {
+    public StudyTrackController(final UserService userService, BookService bookService, CourseService courseService, ImageService imageService) {
         this.userService = userService;
         this.bookService = bookService;
         this.courseService = courseService;
+        this.imageService = imageService;
     }
     /*----------------User services -------------------*/
+
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public List<User> listUsers() {
         LOGGER.debug("Received request to list all users");
@@ -121,6 +132,27 @@ public class StudyTrackController {
         LOGGER.debug("Received request to delete the {}", id);
         courseService.delete(id);
     }
+
+    /*----------------Image services -------------------*/
+    @RequestMapping(value = "/image", method = RequestMethod.GET)
+    public List<Image> listImages() {
+        LOGGER.debug("Received request to list all images");
+        return imageService.getAll();
+    }
+
+    @RequestMapping(value = "/image/{id}", method = RequestMethod.GET)
+    public Image getImage(@PathVariable("id") final Long id) {
+        LOGGER.debug("Received request to retrieve image : {}", id);
+        return imageService.get(id);
+    }
+
+    @RequestMapping(value = "/image", method = RequestMethod.POST)
+    public Image createImage(@RequestParam MultipartFile image) {
+        LOGGER.debug("Received request to create image ");
+        return imageService.uploadImage(image);
+    }
+
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)
     public String handleUserServiceException(ServiceException e) {
