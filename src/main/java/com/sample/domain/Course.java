@@ -11,21 +11,13 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Course extends BaseDomain {
 
-    @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @NotNull
     private String name;
-
-    public Long getId() {
-        return id;
-    }
-
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
+
 
     public String getName() {
         return name;

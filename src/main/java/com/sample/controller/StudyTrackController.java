@@ -29,20 +29,17 @@ import java.util.List;
 public class StudyTrackController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StudyTrackController.class);
-    private final UserService userService;
-    private final BookService bookService;
-    private final CourseService courseService;
-    private final UserCourseService userCourseService;
-    private final ImageService imageService;
-
     @Inject
-    public StudyTrackController(final UserService userService, BookService bookService, CourseService courseService, UserCourseService userCourseService, ImageService imageService) {
-        this.userService = userService;
-        this.bookService = bookService;
-        this.courseService = courseService;
-        this.userCourseService = userCourseService;
-        this.imageService = imageService;
-    }
+    private UserService userService;
+    @Inject
+    private BookService bookService;
+    @Inject
+    private CourseService courseService;
+    @Inject
+    private UserCourseService userCourseService;
+    @Inject
+    private ImageService imageService;
+
     /*----------------User services -------------------*/
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)

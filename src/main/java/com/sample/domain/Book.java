@@ -12,11 +12,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Book extends BaseDomain {
 
-    @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @NotNull
     private String name;
 
@@ -31,6 +26,12 @@ public class Book extends BaseDomain {
     @Lob
     private byte[] image;
 
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
     public byte[] getImage() {
         return image;
     }
@@ -39,13 +40,6 @@ public class Book extends BaseDomain {
         this.image = image;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

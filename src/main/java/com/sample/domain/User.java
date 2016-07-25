@@ -17,11 +17,6 @@ import java.util.Arrays;
 @Entity
 public class User extends BaseDomain {
 
-    @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
     @NotNull
     private String email;
 
@@ -44,22 +39,17 @@ public class User extends BaseDomain {
     @Lob
     private byte[] image;
 
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public byte[] getImage() {
         return image;
     }
 
     public void setImage(byte[] image) {
         this.image = image;
-    }
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-
-        this.id = id;
     }
 
     public String getName() {

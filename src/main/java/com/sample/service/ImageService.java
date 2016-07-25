@@ -2,6 +2,7 @@ package com.sample.service;
 
 import com.sample.domain.Image;
 import com.sample.domain.User;
+import com.sample.repository.CourseRepository;
 import com.sample.repository.ImageRepository;
 import com.sample.repository.UserRepository;
 import com.sample.service.exception.ServiceException;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
@@ -21,32 +23,16 @@ import java.util.List;
 
 @Service
 @Validated
-public class ImageService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ImageService.class);
-    private final ImageRepository repository;
+public class ImageService extends BaseService<Image>{
 
     @Inject
-    public ImageService(ImageRepository repository) {
-        this.repository = repository;
+    private ImageRepository repository;
+
+    @PostConstruct
+    protected void init() {
+        super.init(repository);
     }
 
-    @Transactional(readOnly = true)
-    public Image get(Long userId) {
-        LOGGER.debug("Retrieving the user : {}", userId);
-        Image user = repository.findOne(userId);
-        if (user == null) {
-            throw new ServiceException(
-                    String.format("User with id=%s is not exist", userId));
-        }
-        return user;
-    }
-
-    @Transactional(readOnly = true)
-    public List<Image> getAll() {
-        LOGGER.debug("Retrieving the list of all Images");
-        return repository.findAll();
-    }
 
     @Transactional
     public Image uploadImage(MultipartFile image){

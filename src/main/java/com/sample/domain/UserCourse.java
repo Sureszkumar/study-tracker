@@ -14,11 +14,6 @@ import java.util.List;
 @Entity
 public class UserCourse extends BaseDomain {
 
-    @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
     private Long userId;
 
     private Long courseId;
@@ -29,12 +24,7 @@ public class UserCourse extends BaseDomain {
 
     LocalDate startDate;
 
-    List<Long> bookIds;
-
-    public Long getId() {
-        return id;
-    }
-
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
@@ -77,13 +67,5 @@ public class UserCourse extends BaseDomain {
 
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
-    }
-
-    public List<Long> getBookIds() {
-        return bookIds;
-    }
-
-    public void setBookIds(List<Long> bookIds) {
-        this.bookIds = bookIds;
     }
 }

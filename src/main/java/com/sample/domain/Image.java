@@ -11,11 +11,6 @@ import javax.persistence.Lob;
 @Entity
 public class Image extends BaseDomain {
 
-    @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     private Long userId;
 
     private Long courseId;
@@ -25,16 +20,17 @@ public class Image extends BaseDomain {
     @Lob
     private byte[] image;
 
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public byte[] getImage() {
         return image;
     }
 
     public void setImage(byte[] image) {
         this.image = image;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public Long getUserId() {
