@@ -4,9 +4,11 @@ import com.sample.domain.Book;
 import com.sample.domain.Course;
 import com.sample.domain.Image;
 import com.sample.domain.User;
+import com.sample.domain.UserCourse;
 import com.sample.service.BookService;
 import com.sample.service.CourseService;
 import com.sample.service.ImageService;
+import com.sample.service.UserCourseService;
 import com.sample.service.UserService;
 import com.sample.service.exception.ServiceException;
 import io.swagger.annotations.ApiOperation;
@@ -30,13 +32,15 @@ public class StudyTrackController {
     private final UserService userService;
     private final BookService bookService;
     private final CourseService courseService;
+    private final UserCourseService userCourseService;
     private final ImageService imageService;
 
     @Inject
-    public StudyTrackController(final UserService userService, BookService bookService, CourseService courseService, ImageService imageService) {
+    public StudyTrackController(final UserService userService, BookService bookService, CourseService courseService, UserCourseService userCourseService, ImageService imageService) {
         this.userService = userService;
         this.bookService = bookService;
         this.courseService = courseService;
+        this.userCourseService = userCourseService;
         this.imageService = imageService;
     }
     /*----------------User services -------------------*/
@@ -150,6 +154,12 @@ public class StudyTrackController {
     public Image createImage(@RequestParam MultipartFile image) {
         LOGGER.debug("Received request to create image ");
         return imageService.uploadImage(image);
+    }
+
+    @RequestMapping(value = "/userCourse", method = RequestMethod.POST)
+    public UserCourse createUserCourse(@RequestBody final UserCourse userCourse) {
+        LOGGER.debug("Received request to create the {}", userCourse);
+        return userCourseService.create(userCourse);
     }
 
 

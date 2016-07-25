@@ -12,26 +12,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.util.Arrays;
 
 @Entity
 public class User extends BaseDomain {
 
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotNull
-    private String mobile;
-
     private String email;
 
     private String name;
 
-    private String authToken;
+    private String mobile;
 
-    private String otp;
+    private String authToken;
 
     private String gender;
 
@@ -41,7 +39,19 @@ public class User extends BaseDomain {
     private int age;
 
     @NotNull
-    private Boolean otpVerified = false;
+    private Boolean verified = false;
+
+    @Lob
+    private byte[] image;
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
 
     public Long getId() {
         return id;
@@ -68,20 +78,12 @@ public class User extends BaseDomain {
         this.authToken = authToken;
     }
 
-    public String getOtp() {
-        return otp;
+    public Boolean getVerified() {
+        return verified;
     }
 
-    public void setOtp(String otp) {
-        this.otp = otp;
-    }
-
-    public Boolean getOtpVerified() {
-        return otpVerified;
-    }
-
-    public void setOtpVerified(Boolean otpVerified) {
-        this.otpVerified = otpVerified;
+    public void setVerified(Boolean verified) {
+        this.verified = verified;
     }
 
     public String getEmail() {

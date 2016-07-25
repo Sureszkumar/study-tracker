@@ -15,6 +15,8 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.sample.util.ServiceUtils.copyNonNullProperties;
+
 @Service
 @Validated
 public class UserService {
@@ -46,8 +48,14 @@ public class UserService {
     @Transactional
     public User update(@NotNull final User user) {
         LOGGER.debug("Updating {}", user);
-        user.setLastChangeTimestamp(LocalDateTime.now());
-        return repository.save(user);
+        User existing = repository.findOne(user.getId());
+        if (existing == null) {
+            throw new ServiceException(
+                    String.format("user with id =%s not exist", user.getId()));
+        }
+        copyNonNullProperties(user, existing);
+        existing.setLastChangeTimestamp(LocalDateTime.now());
+        return repository.save(existing);
     }
 
     @Transactional

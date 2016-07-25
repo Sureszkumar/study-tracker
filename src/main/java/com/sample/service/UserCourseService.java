@@ -1,9 +1,8 @@
 package com.sample.service;
 
-import com.sample.domain.Course;
-import com.sample.repository.CourseRepository;
+import com.sample.domain.UserCourse;
+import com.sample.repository.UserCourseRepository;
 import com.sample.service.exception.ServiceException;
-import com.sample.util.ServiceUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -17,18 +16,18 @@ import java.util.List;
 
 @Service
 @Validated
-public class CourseService {
+public class UserCourseService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CourseService.class);
-    private final CourseRepository repository;
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserCourseService.class);
+    private final UserCourseRepository repository;
 
     @Inject
-    public CourseService(final CourseRepository repository) {
+    public UserCourseService(final UserCourseRepository repository) {
         this.repository = repository;
     }
 
     @Transactional
-    public Course create(@NotNull final Course course) {
+    public UserCourse create(@NotNull final UserCourse course) {
         LOGGER.debug("Creating {}", course);
         course.setCreationDateTime(LocalDateTime.now());
         course.setLastChangeTimestamp(LocalDateTime.now());
@@ -36,7 +35,7 @@ public class CourseService {
     }
 
     @Transactional
-    public Course update(@NotNull final Course course) {
+    public UserCourse update(@NotNull final UserCourse course) {
         LOGGER.debug("Updating {}", course);
         course.setLastChangeTimestamp(LocalDateTime.now());
         return repository.save(course);
@@ -45,7 +44,7 @@ public class CourseService {
     @Transactional
     public void delete(Long courseId) {
         LOGGER.debug("Deleting {}", courseId);
-        Course existing = repository.findOne(courseId);
+        UserCourse existing = repository.findOne(courseId);
         if (existing == null) {
             throw new ServiceException(
                     String.format("course with id =%s not exist", courseId));
@@ -54,18 +53,18 @@ public class CourseService {
     }
 
     @Transactional(readOnly = true)
-    public Course get(Long courseId) {
+    public UserCourse get(Long courseId) {
         LOGGER.debug("Retrieving the course : {}", courseId);
-        Course course = repository.findOne(courseId);
+        UserCourse course = repository.findOne(courseId);
         if (course == null) {
             throw new ServiceException(
-                    String.format("Course with id=%s is not exist", courseId));
+                    String.format("UserCourse with id=%s is not exist", courseId));
         }
         return course;
     }
 
     @Transactional(readOnly = true)
-    public List<Course> getAll() {
+    public List<UserCourse> getAll() {
         LOGGER.debug("Retrieving the list of all courses");
         return repository.findAll();
     }
