@@ -39,11 +39,6 @@ public class User extends BaseDomain {
     @Lob
     private byte[] image;
 
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public byte[] getImage() {
         return image;
     }

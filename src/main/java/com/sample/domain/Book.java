@@ -1,12 +1,10 @@
 package com.sample.domain;
 
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -21,16 +19,20 @@ public class Book extends BaseDomain {
 
     private long noOfPages;
 
-    private Long courseId;
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
 
     @Lob
     private byte[] image;
 
-    @Override
-    public void setId(Long id) {
-        this.id = id;
+    public Course getCourse() {
+        return course;
     }
 
+    public void setCourse(Course course) {
+        this.course = course;
+    }
 
     public byte[] getImage() {
         return image;
@@ -73,11 +75,5 @@ public class Book extends BaseDomain {
         this.noOfPages = noOfPages;
     }
 
-    public Long getCourseId() {
-        return courseId;
-    }
 
-    public void setCourseId(Long courseId) {
-        this.courseId = courseId;
-    }
 }

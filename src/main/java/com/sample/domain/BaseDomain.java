@@ -27,7 +27,9 @@ public abstract class BaseDomain {
         return id;
     }
 
-    protected abstract void setId(Long id);
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public LocalDateTime getCreationDateTime() {
         return creationDateTime;

@@ -18,15 +18,20 @@ public class UserCourse extends BaseDomain {
 
     private Long courseId;
 
+    private Long bookId;
+
     Proficiency proficiency;
 
     LocalDate targetDate;
 
     LocalDate startDate;
 
-    @Override
-    public void setId(Long id) {
-        this.id = id;
+    public Long getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(Long bookId) {
+        this.bookId = bookId;
     }
 
     public Long getUserId() {
