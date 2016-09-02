@@ -7,6 +7,7 @@ import com.sample.domain.User;
 import com.sample.domain.UserCourse;
 import com.sample.service.BookService;
 import com.sample.service.CourseService;
+import com.sample.service.EmailService;
 import com.sample.service.ImageService;
 import com.sample.service.UserCourseService;
 import com.sample.service.UserService;
@@ -39,6 +40,8 @@ public class StudyTrackController {
     private UserCourseService userCourseService;
     @Inject
     private ImageService imageService;
+    @Inject
+    private EmailService emailService;
 
     /*----------------User services -------------------*/
 
@@ -159,6 +162,11 @@ public class StudyTrackController {
         return userCourseService.create(userCourse);
     }
 
+    @RequestMapping(value = "/email/{toAddress}", method = RequestMethod.POST)
+    public void sendEmail(@PathVariable("toAddress") final String toAddress) {
+        LOGGER.debug("Sending verification email to {}", toAddress);
+        emailService.sendMail(toAddress);
+    }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)
