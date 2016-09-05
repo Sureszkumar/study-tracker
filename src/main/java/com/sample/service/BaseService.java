@@ -1,17 +1,18 @@
 package com.sample.service;
 
 
-import com.sample.domain.BaseDomain;
-import com.sample.repository.BaseRepository;
-import com.sample.service.exception.ServiceException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.transaction.annotation.Transactional;
+import static com.sample.util.ServiceUtils.copyNonNullProperties;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.sample.util.ServiceUtils.copyNonNullProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.sample.domain.BaseDomain;
+import com.sample.repository.BaseRepository;
+import com.sample.service.exception.ServiceException;
 
 public class BaseService<T extends BaseDomain> {
 

@@ -1,12 +1,13 @@
 package com.sample.service;
 
-import com.sample.domain.User;
-import com.sample.repository.UserRepository;
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
+import com.sample.domain.User;
+import com.sample.repository.UserRepository;
 
 @Service
 @Validated

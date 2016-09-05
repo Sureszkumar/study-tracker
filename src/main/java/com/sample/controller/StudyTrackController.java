@@ -1,5 +1,22 @@
 package com.sample.controller;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.sample.domain.Book;
 import com.sample.domain.Course;
 import com.sample.domain.Image;
@@ -7,24 +24,10 @@ import com.sample.domain.User;
 import com.sample.domain.UserCourse;
 import com.sample.service.BookService;
 import com.sample.service.CourseService;
-import com.sample.service.EmailService;
 import com.sample.service.ImageService;
 import com.sample.service.UserCourseService;
 import com.sample.service.UserService;
 import com.sample.service.exception.ServiceException;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.inject.Inject;
-import javax.servlet.annotation.MultipartConfig;
-import java.io.IOException;
-import java.util.List;
 
 @RestController
 public class StudyTrackController {
@@ -40,8 +43,6 @@ public class StudyTrackController {
     private UserCourseService userCourseService;
     @Inject
     private ImageService imageService;
-    @Inject
-    private EmailService emailService;
 
     /*----------------User services -------------------*/
 
@@ -160,12 +161,6 @@ public class StudyTrackController {
     public UserCourse createUserCourse(@RequestBody final UserCourse userCourse) {
         LOGGER.debug("Received request to create the {}", userCourse);
         return userCourseService.create(userCourse);
-    }
-
-    @RequestMapping(value = "/email/{toAddress}", method = RequestMethod.POST)
-    public void sendEmail(@PathVariable("toAddress") final String toAddress) {
-        LOGGER.debug("Sending verification email to {}", toAddress);
-        emailService.sendMail(toAddress);
     }
 
     @ExceptionHandler
